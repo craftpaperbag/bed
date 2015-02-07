@@ -5,33 +5,26 @@
 </head>
 
 <body>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="logo col-sm-12">
         <h1>bed</h1>
       </div>
     </div>
+  </div>
 
+  <div class="container">
     <div class="row">
-      <div class="col-xs-4">
+      <div class="col-xs-12 col-sm-6">
         <canvas id="circle">
         </canvas>
       </div>
-      <div class="col-xs-4">
-        <canvas id="circle2">
-        </canvas>
-      </div>
-      <div class="col-xs-4">
-        <canvas id="circle3">
-        </canvas>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="graph-container col-xs-10 col-xs-offset-1">
-        <canvas id="graph">
-        </canvas>
+      <div class="col-xs-12 col-sm-6">
+        {{#each hours}}
+          <div class="hour">{{hour}}</div>
+        {{/each}}
       </div>
     </div>
   </div>
+
 </body>

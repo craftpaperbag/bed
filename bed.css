@@ -4,20 +4,32 @@ html {
 }
 body {
   height: 100%;
-  color: #272526;
-  background: #272526;
+  color: #2a2c2b;
+  background: #e2e6f3;
   margin: 0;
   padding: 0;
 }
 .container {
-  background: #d9ddb5;
+  background: #e2e6f3;
   height: 100%;
 }
 .logo {
   text-align: center;
+  background: #2a2c2b;
+  color: #ee4458;
 }
 h1 {
   padding-top: 10px;
+  padding-bottom: 10px;
   margin-top: 0;
-  color: #272526;
+  margin-top: 0;
+}
+.bed-bar {
+  height: 18px;
+  width: 90%;
+  margin: 50px auto;
+  border: 1px solid black;
+}
+.hour {
+  display: inline-block;
 }
