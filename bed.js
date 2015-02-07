@@ -53,8 +53,8 @@ if (Meteor.isClient) {
     var hours = [];
     var samples = [];
     for (var i=0; i<24; i++) {
-      hours.push(i);
-      samples.push(Math.random());
+      hours.push(String(i)+"時");
+      samples.push( Math.round(Math.random() * 60) );
     }
     var lineGraph = new Chart(lineCtx).Line({
       labels: hours,
@@ -70,7 +70,10 @@ if (Meteor.isClient) {
           data: samples,
         },
       ],
+    }, {
+      scaleLabel: "<%=value%>分間",
     });
+
   });
 
 
