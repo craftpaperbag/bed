@@ -40,26 +40,39 @@ if (Meteor.isClient) {
   Meteor.startup(function () {
     // setup graph
     Chart.defaults.global.responsive = true;
-    var circleCtx = document.getElementById("circle").getContext("2d");
-    var circleData = makeCircleChartData();
-    var options = {
+    // Pie
+    var pieCtx = document.getElementById("pie").getContext("2d");
+    var pieData = makeCircleChartData();
+    var pieOptions = {
       segmentShowStroke: false,
     };
-    var circleGraph = new Chart(circleCtx).Pie(circleData, options);
+    var pieGraph = new Chart(pieCtx).Pie(pieData, pieOptions);
+    // line
+    // Pie
+    var lineCtx = document.getElementById("line").getContext("2d");
+    var hours = [];
+    var samples = [];
+    for (var i=0; i<24; i++) {
+      hours.push(i);
+      samples.push(Math.random());
+    }
+    var lineGraph = new Chart(lineCtx).Line({
+      labels: hours,
+      datasets: [
+        {
+          label: "寝てた分",
+          fillColor: "rgba(42,44,43,0.5)",
+          strokeColor: "#2a2c2b",
+          pointColor: "#2a2c2b",
+          pointStrokeColor: "#2a2c2b",
+          pointHighlightFill: "#2a2c2b",
+          pointHighlightStroke: "rgba(220,220,220,1)",
+          data: samples,
+        },
+      ],
+    });
   });
 
-  Template.body.helpers({
-    hours: function () {
-      var hours = [];
-      for (var i=0; i<24; i++) {
-        hours.push({
-          hour: i,
-          sleepRatio: 1.0, /* 1: 全部寝てた 1>x>0:寝てた比率 0: 起きてた null: データなし */
-        });
-      }
-      return hours;
-    },
-  });
 
 /*
   Template.hello.helpers({
