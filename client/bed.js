@@ -1,6 +1,14 @@
 //
-// bed client
+// bed.client
 //
+
+var SleepLogs = new Mongo.Collection("sleepLogs");
+
+//
+// Subscribe
+//
+
+Meteor.subscribe("sleepLogs");
 
 var makeCircleChartData = function (list) {
   var data = [
@@ -63,4 +71,18 @@ Meteor.startup(function () {
     scaleLabel: "<%=value%>分間",
   });
 
+});
+
+
+//
+// Template helpers
+//
+
+Template.body.helpers({
+  recents: function () {
+    return SleepLogs.find({}, {sort: {createdAt: -1}, limit: 5});
+  },
+  createdDate: function () {
+    return new Date(this.createdAt)
+  },
 });
