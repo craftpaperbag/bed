@@ -2,8 +2,6 @@
 // bed.server
 //
 
-var SleepLogs = new Mongo.Collection("sleepLogs");
-
 //
 // dummy logs
 //

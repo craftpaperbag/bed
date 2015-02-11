@@ -1,8 +1,7 @@
 //
 // bed.client
 //
-
-var SleepLogs = new Mongo.Collection("sleepLogs");
+console.log("bed.js load start")
 
 //
 // Subscribe
@@ -34,6 +33,15 @@ var makeCircleChartData = function (list) {
   return data;
 }
 
+Template.body.helpers({
+  recents: function () {
+    return SleepLogs.find({}, {sort: {createdAt: -1}, limit: 5});
+  },
+  createdDate: function () {
+    return new Date(this.createdAt);
+  },
+});
+
 Meteor.startup(function () {
   // setup graph
   Chart.defaults.global.responsive = true;
@@ -44,8 +52,8 @@ Meteor.startup(function () {
     segmentShowStroke: false,
   };
   var pieGraph = new Chart(pieCtx).Pie(pieData, pieOptions);
+
   // line
-  // Pie
   var lineCtx = document.getElementById("line").getContext("2d");
   var hours = [];
   var samples = [];
@@ -70,19 +78,10 @@ Meteor.startup(function () {
   }, {
     scaleLabel: "<%=value%>分間",
   });
-
 });
 
-
-//
-// Template helpers
-//
-
-Template.body.helpers({
-  recents: function () {
-    return SleepLogs.find({}, {sort: {createdAt: -1}, limit: 5});
-  },
-  createdDate: function () {
-    return new Date(this.createdAt)
-  },
-});
+SleepLogs.minutesPerHour = function () {
+  // raw logs --> list of total sleeping minutes per hour
+  return Utils.todayString();
+}
+console.log(SleepLogs.minutesPerHour());
