@@ -84,4 +84,3 @@ SleepLogs.minutesPerHour = function () {
   // raw logs --> list of total sleeping minutes per hour
   return Utils.todayString();
 }
-console.log(SleepLogs.minutesPerHour());

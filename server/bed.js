@@ -26,4 +26,3 @@ Meteor.publish("sleepLogs", function () {
 
 Meteor.startup(function () {
 });
-
