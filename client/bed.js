@@ -7,6 +7,7 @@ console.log("bed.js load start")
 // Subscribe
 //
 
+console.log("subscribe SleepLogs");
 Meteor.subscribe("sleepLogs");
 
 var makeCircleChartData = function (list) {
@@ -40,6 +41,9 @@ Template.body.helpers({
   createdDate: function () {
     return new Date(this.createdAt);
   },
+  yesterdayString: function() {
+    return Utils.dayString(Utils.yesterday());
+  },
 });
 
 Meteor.startup(function () {
@@ -61,26 +65,28 @@ Meteor.startup(function () {
     hours.push(String(i)+"時");
     samples.push( Math.round(Math.random() * 60) );
   }
-  var lineGraph = new Chart(lineCtx).Line({
-    labels: hours,
-    datasets: [
-      {
-        label: "寝てた分",
-        fillColor: "rgba(42,44,43,0.5)",
-        strokeColor: "#2a2c2b",
-        pointColor: "#2a2c2b",
-        pointStrokeColor: "#2a2c2b",
-        pointHighlightFill: "#2a2c2b",
-        pointHighlightStroke: "rgba(220,220,220,1)",
-        data: samples,
-      },
-    ],
-  }, {
-    scaleLabel: "<%=value%>分間",
+
+  //
+  // server method call
+  Meteor.call("daySleepLogs", function (err, result) {
+    if (err) {
+      console.log("error: daySleepLogs");
+      console.log(err);
+      return;
+    }
+
+    var lineGraph = new Chart(lineCtx).Line({
+      labels: hours,
+      datasets: [
+        {
+          label: "寝てた分",
+          data: result,
+        },
+      ],
+    }, {
+      scaleLabel: "<%=value%>分間",
+      bezierCurve: false,
+    });
   });
 });
 
-SleepLogs.minutesPerHour = function () {
-  // raw logs --> list of total sleeping minutes per hour
-  return Utils.todayString();
-}
