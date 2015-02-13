@@ -11,7 +11,36 @@ Meteor.publish("sleepLogs", function () {
   return SleepLogs.find({});
 });
 
-// TODO: refactor daySleepLogs.
+/*  daySleepLogs( [back] );
+ *
+ * ---- back >= 0 ----
+ *
+ *            n-2      n-1       n
+ *  date  |---------|--------|-------|---->
+ *                  |        |    ^  |
+ *                  |        |   now |
+ *                  |        |=======|
+ *                  |        | back: 0
+ *                  |========|
+ *                    back: 1
+ *
+ *
+ * ---- return array ----
+ * [
+ *   60,  <--0:00〜0:59
+ *   60,  <--1:00〜1:59
+ *   60,  ...
+ *   45,
+ *   10,
+ *   0,
+ *   0,
+ *   ...
+ *   0,
+ *   null, <--23:00〜23:59 nodata
+ *   null
+ * ]
+ */
+
 Meteor.methods({
   daySleepLogs: function (back) {
     console.log("daySleepLogs start");
