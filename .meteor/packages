@@ -10,3 +10,4 @@ mrt:chartjs
 jquery
 nemo64:bootstrap
 less
+iron:router
