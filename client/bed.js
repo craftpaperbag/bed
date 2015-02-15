@@ -4,6 +4,28 @@
 console.log("bed.js load start")
 
 //
+// Router
+//
+
+Router.configure({
+  layoutTemplate: 'layout',
+  notFoundTemplate: 'notFound'
+});
+
+var HomeController = RouteController.extend({
+  template: 'home'
+});
+
+Router.map(function() {
+
+  this.route('home', {
+    path: '/',
+    controller: HomeController
+  });
+
+});
+
+//
 // Subscribe
 //
 
@@ -34,13 +56,17 @@ var makeCircleChartData = function (list) {
   return data;
 }
 
-Template.body.helpers({
+Template.home.helpers({
   yesterdayString: function () {
     return Utils.todayString();
   },
 });
 
-Meteor.startup(function () {
+Template.home.rendered = function () {
+  setupGraphs();
+}
+
+function setupGraphs() {
   // setup graph
   Chart.defaults.global.responsive = true;
   // Pie
@@ -82,5 +108,5 @@ Meteor.startup(function () {
       bezierCurve: false,
     });
   });
-});
+}
 
