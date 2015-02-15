@@ -35,14 +35,8 @@ var makeCircleChartData = function (list) {
 }
 
 Template.body.helpers({
-  recents: function () {
-    return SleepLogs.find({}, {sort: {createdAt: -1}, limit: 5});
-  },
-  createdDate: function () {
-    return new Date(this.createdAt);
-  },
-  yesterdayString: function() {
-    return Utils.dayString(Utils.yesterday());
+  yesterdayString: function () {
+    return Utils.todayString();
   },
 });
 
